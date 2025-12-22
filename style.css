@@ -1,0 +1,426 @@
+* {
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.box {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+.box button {
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ==================== */
+
+.quiz-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: #666;
+    font-size: 14px;
+}
+
+#question {
+    font-size: 18px;
+    margin-bottom: 18px;
+    color: #333;
+}
+
+.variants {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.variant {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid #eee;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 16px;
+}
+
+.variant:hover {
+    border-color: #667eea;
+    background: #f3f4ff;
+}
+
+.variant.active {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+    transform: scale(1.02);
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    #question {
+        font-size: 16px;
+    }
+
+    .variant {
+        font-size: 15px;
+        padding: 12px 14px;
+    }
+
+    button {
+        font-size: 15px;
+        padding: 12px;
+    }
+}
+
+/* ==================== */
+
+/* ORQA FON (rasm yoki gradient) */
+.background {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(120deg, #6366f1, #22d3ee);
+    z-index: -1;
+}
+
+/* LOADER OVERLAY */
+#loader {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+#loader.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* GLASS CARD */
+.glass {
+    width: 220px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    text-align: center;
+}
+
+/* SPINNER */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top: 5px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+/* TEXT */
+.glass p {
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* ANIMATION */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* CONTENT */
+#content {
+    display: none;
+    padding: 40px;
+    color: #fff;
+}
+
+/* ======================== */
+
+
+
+/* #notification-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notification {
+    position: relative;
+    min-width: 280px;
+    max-width: 340px;
+    padding: 14px 18px 18px 16px;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+
+    background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+
+    animation: enter 0.45s cubic-bezier(.22, 1, .36, 1);
+}
+
+.notification .icon {
+    font-size: 20px;
+    margin-top: 2px;
+}
+
+.notification .content {
+    flex: 1;
+}
+
+.notification .title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.notification.info {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+}
+
+.notification .progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 0 0 14px 14px;
+    animation: progress linear forwards;
+}
+
+@keyframes enter {
+    from {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes leave {
+    to {
+        opacity: 0;
+        transform: translateX(40px) scale(0.95);
+    }
+}
+
+@keyframes progress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+/* Rang turlari */
+/* .notification.success {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+} */ 
+
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notification {
+    width: 360px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-radius: 14px;
+    color: #f8fafc;
+    font-family: system-ui, sans-serif;
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.45),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+    opacity: 0;
+    transform: translateX(120%) scale(0.96);
+    transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.notification.hide {
+    opacity: 0;
+    transform: translateX(120%) scale(0.96);
+}
+
+.notification-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.notification-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #e5e7eb;
+}
+
+.notification-progress {
+    height: 3px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.notification-progress-bar {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+}
+
+/* ===== TURLAR ===== */
+.notification.success .notification-icon {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+}
+
+.notification.success .notification-progress-bar {
+    background: linear-gradient(90deg, #22c55e, #4ade80);
+}
+
+.notification.error .notification-icon {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.notification.error .notification-progress-bar {
+    background: linear-gradient(90deg, #ef4444, #f87171);
+}
+
+.notification.warning .notification-icon {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.notification.warning .notification-progress-bar {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.notification.info .notification-icon {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.notification.info .notification-progress-bar {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
