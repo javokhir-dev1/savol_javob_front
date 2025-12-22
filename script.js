@@ -68,6 +68,8 @@ function runQuiz(questions, minutes) {
         nextBtn.style.display = "none";
         progressEl.textContent = "";
 
+        showNotification("", "Natijalar muvaffaqiyatli yuborildi", "success", 3000)
+
         resolve(answers);
     }
 
@@ -202,7 +204,9 @@ const loadData = async () => {
 
             questions.push({ id: question_id, question: question_text, variants })
         }
-        const results = await runQuiz(questions, 1)
+
+        const timer = await sendRequest(`${SERVER}/api/timer`, 'GET')
+        const results = await runQuiz(questions, timer.time)
         const tg_id = window.Telegram.WebApp.initDataUnsafe.user.id
 
         await sendRequest(`${SERVER}/api/userresults`, "POST", { user_id: tg_id })
