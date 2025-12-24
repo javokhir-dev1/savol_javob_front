@@ -343,7 +343,7 @@ const loadData = async () => {
 
             questions.push({ id: question_id, question: question_text, variants })
         }
-
+        hideLoader()
 
         const timer = await sendRequest(`${SERVER}/api/timer`, 'GET')
         const results = await runQuiz(randomArr(questions), timer.time)
@@ -415,7 +415,6 @@ box_btn.addEventListener("click", async (ctx) => {
                 showLoader()
                 showQuiz()
                 await loadData()
-                hideLoader()
             }
         }
 
