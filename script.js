@@ -257,7 +257,7 @@ function showNotification(
     }, duration);
 }
 
-const SERVER = "https://savoljavob.duckdns.org"
+const SERVER = "http://localhost:3051"
 
 
 // {
@@ -288,7 +288,7 @@ async function sendRequest(url, method, body = null) {
         const data = await response.json();
         return data;
     } catch (error) {
-        showNotification("Error", "Xatolik yuz berdi", "error", 3000)
+        showNotification("Error", "Xatolik yuz berdi 1", "error", 3000)
         console.log(error)
         return null;
     }
@@ -348,9 +348,9 @@ const loadData = async () => {
         const timer = await sendRequest(`${SERVER}/api/timer`, 'GET')
         const results = await runQuiz(randomArr(questions), timer.time)
         const user = window.Telegram.WebApp.initDataUnsafe.user
-        const user_id = user.id || "user_id"
-        const first_name = username.first_name || "first_name"
-        const last_name = username.last_name
+        const user_id = user.id
+        const first_name = user.first_name || "first_name"
+        const last_name = user.last_name
         const full_name = first_name + (last_name || "")
 
         const time = await sendRequest(`${SERVER}/api/time`, "GET")
@@ -368,7 +368,7 @@ const loadData = async () => {
         await sendRequest(`${SERVER}/api/users`, "POST", { user_id, full_name })
         showNotification("", "Natijalar muvaffaqiyatli yuborildi", "success", 3000)
     } catch (err) {
-        showNotification("", "Xatolik yuz berdi", "error", 3000)
+        showNotification("", "xatolik yuz berdi 2", "error", 3000)
         console.log(err)
     }
 }
@@ -396,7 +396,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         box_p.textContent = `Barcha savollarga javob berish uchun umumiy ${timer.time} daqiqa vaqtingiz bor!`
         hideLoader()
     } catch (err) {
-        showNotification("Error", "Xatolik yuz berdi", "error", 3000)
+        showNotification("Error", "Xatolik yuz berdi 3", "error", 3000)
         console.log(err)
     }
 })
