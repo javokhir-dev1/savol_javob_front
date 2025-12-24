@@ -347,7 +347,7 @@ const loadData = async () => {
         const timer = await sendRequest(`${SERVER}/api/timer`, 'GET')
         const results = await runQuiz(randomArr(questions), timer.time)
         const user = window.Telegram.WebApp.initDataUnsafe.user
-        const user_id = user.id
+        const user_id = String(user.id)
         const first_name = user.first_name || "first_name"
         const last_name = user.last_name
         const full_name = first_name + (last_name || "")
