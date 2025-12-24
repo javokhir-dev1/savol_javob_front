@@ -408,7 +408,7 @@ box_btn.addEventListener("click", async (ctx) => {
             const user_id = window.Telegram.WebApp.initDataUnsafe.user.id
 
             const time = await sendRequest(`${SERVER}/api/time`, "GET")
-            const data = await sendRequest(`${SERVER}/api/userresults/date`, "POST", { date: time.date })
+            const data = await sendRequest(`${SERVER}/api/userresults/date`, "POST", { date: time.date, user_id: String(user_id) })
 
             if (data.exists) {
                 showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
