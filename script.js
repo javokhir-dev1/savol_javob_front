@@ -364,8 +364,8 @@ const loadData = async () => {
             }
         )
 
-        const user = await sendRequest(`${SERVER}/api/users`, "POST", { user_id, full_name })
-        console.log(user)
+        const user1 = await sendRequest(`${SERVER}/api/users`, "POST", { user_id, full_name })
+        console.log(user1)
         showNotification("", "Natijalar muvaffaqiyatli yuborildi", "success", 3000)
     } catch (err) {
         showNotification("", "xatolik yuz berdi 2", "error", 3000)
