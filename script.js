@@ -406,28 +406,16 @@ box_btn.addEventListener("click", async (ctx) => {
         if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
             const user_id = window.Telegram.WebApp.initDataUnsafe.user.id
 
-            const data = await sendRequest(`${SERVER}/api/userresults/${user_id}`, "GET")
-            console.log(data)
             const time = await sendRequest(`${SERVER}/api/time`, "GET")
-            console.log(time)
+            const data = await sendRequest(`${SERVER}/api/userresults/date`, "POST", { date: time.date })
 
-            if (data) {
-                if (isSameDateDMY(data.date, time.date)) {
-
-                    showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
-                    return
-                } else {
-                    showLoader()
-                    showQuiz()
-                    await loadData()
-                }
+            if (data.exists) {
+                showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
             } else {
                 showLoader()
                 showQuiz()
                 await loadData()
             }
-
-
         } else {
             showNotification("Error", "Telegram WebApp orqali kiring!", "error", 3000);
         }
