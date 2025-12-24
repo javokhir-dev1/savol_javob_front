@@ -257,7 +257,7 @@ function showNotification(
     }, duration);
 }
 
-const SERVER = "http://localhost:3051"
+const SERVER = "https://savoljavob.duckdns.org"
 
 
 // {
@@ -400,22 +400,26 @@ const box_btn = document.getElementById("box_btn")
 box_btn.addEventListener("click", async (ctx) => {
     try {
         if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
-            const user_id = window.Telegram.WebApp.initDataUnsafe.user.id
+        const user_id = window.Telegram.WebApp.initDataUnsafe.user.id
 
-            const data = await sendRequest(`${SERVER}/api/userresults/${user_id}`, "GET")
-            const time = await sendRequest(`${SERVER}/api/time`, "GET")
+        const data = await sendRequest(`${SERVER}/api/userresults/${user_id}`, "GET")
+        console.log(data)
+        const time = await sendRequest(`${SERVER}/api/time`, "GET")
+        console.log(time)
 
-            if (data) {
-                if (isSameDateDMY(data.date, time.date)) {
-                    showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
-                }
+        if (data) {
+            if (isSameDateDMY(data.date, time.date)) {
+                showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
                 return
+            } else {
+                showLoader()
+                showQuiz()
+                await loadData()
+                hideLoader()
             }
+        }
 
-            showLoader()
-            showQuiz()
-            loadData()
-            hideLoader()
+        
         } else {
             showNotification("Error", "Telegram WebApp orqali kiring!", "error", 3000);
         }
