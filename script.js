@@ -257,7 +257,7 @@ function showNotification(
     }, duration);
 }
 
-const SERVER = "http://localhost:3051"
+const SERVER = "https://savoljavob.duckdns.org"
 
 
 // {
