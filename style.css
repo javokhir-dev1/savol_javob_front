@@ -307,12 +307,13 @@ button:hover {
 .notification.warning {
     background: linear-gradient(135deg, #f59e0b, #d97706);
 } */ 
-
 #notification-container {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 9999;
+
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -337,18 +338,18 @@ button:hover {
         inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 
     opacity: 0;
-    transform: translateX(120%) scale(0.96);
+    transform: translateY(-20px) scale(0.96);
     transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .notification.show {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translateY(0) scale(1);
 }
 
 .notification.hide {
     opacity: 0;
-    transform: translateX(120%) scale(0.96);
+    transform: translateY(-20px) scale(0.96);
 }
 
 .notification-icon {
