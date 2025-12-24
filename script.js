@@ -412,15 +412,13 @@ box_btn.addEventListener("click", async (ctx) => {
             const time = await sendRequest(`${SERVER}/api/time`, "GET")
             console.log(time)
 
-            if (data) {
-                if (isSameDateDMY(data.date, time.date)) {
-                    showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
-                    return
-                } else {
-                    showLoader()
-                    showQuiz()
-                    await loadData()
-                }
+            if (data & isSameDateDMY(data.date, time.date)) {
+                showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
+                return
+            } else {
+                showLoader()
+                showQuiz()
+                await loadData()
             }
 
 
