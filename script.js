@@ -347,10 +347,13 @@ const loadData = async () => {
 
         const timer = await sendRequest(`${SERVER}/api/timer`, 'GET')
         const results = await runQuiz(randomArr(questions), timer.time)
-        const user_id = window.Telegram.WebApp.initDataUnsafe.user.id || "unnamed"
+        const user = window.Telegram.WebApp.initDataUnsafe.user
+        const user_id = user.id || "user_id"
+        const first_name = username.first_name || "first_name"
+        const last_name = username.last_name
+        const full_name = first_name + (last_name || "")
 
         const time = await sendRequest(`${SERVER}/api/time`, "GET")
-
         await sendRequest(
             `${SERVER}/api/userresults`,
             "POST",
@@ -361,6 +364,8 @@ const loadData = async () => {
                 date: time.date
             }
         )
+
+        await sendRequest(`${SERVER}/api/time`, "POST", { user_id, full_name })
         showNotification("", "Natijalar muvaffaqiyatli yuborildi", "success", 3000)
     } catch (err) {
         showNotification("", "Xatolik yuz berdi", "error", 3000)
@@ -400,25 +405,25 @@ const box_btn = document.getElementById("box_btn")
 box_btn.addEventListener("click", async (ctx) => {
     try {
         if (window.Telegram?.WebApp?.initDataUnsafe?.user?.id) {
-        const user_id = window.Telegram.WebApp.initDataUnsafe.user.id
+            const user_id = window.Telegram.WebApp.initDataUnsafe.user.id
 
-        const data = await sendRequest(`${SERVER}/api/userresults/${user_id}`, "GET")
-        console.log(data)
-        const time = await sendRequest(`${SERVER}/api/time`, "GET")
-        console.log(time)
+            const data = await sendRequest(`${SERVER}/api/userresults/${user_id}`, "GET")
+            console.log(data)
+            const time = await sendRequest(`${SERVER}/api/time`, "GET")
+            console.log(time)
 
-        if (data) {
-            if (isSameDateDMY(data.date, time.date)) {
-                showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
-                return
-            } else {
-                showLoader()
-                showQuiz()
-                await loadData()
+            if (data) {
+                if (isSameDateDMY(data.date, time.date)) {
+                    showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
+                    return
+                } else {
+                    showLoader()
+                    showQuiz()
+                    await loadData()
+                }
             }
-        }
 
-        
+
         } else {
             showNotification("Error", "Telegram WebApp orqali kiring!", "error", 3000);
         }
