@@ -259,7 +259,6 @@ function showNotification(
 
 const SERVER = "https://savoljavob.duckdns.org"
 
-
 // {
 //     id: 5,
 //     question: "CSS nima qiladi? 2",
@@ -412,9 +411,16 @@ box_btn.addEventListener("click", async (ctx) => {
             const time = await sendRequest(`${SERVER}/api/time`, "GET")
             console.log(time)
 
-            if (data & isSameDateDMY(data.date, time.date)) {
-                showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
-                return
+            if (data) {
+                if (isSameDateDMY(data.date, time.date)) {
+
+                    showNotification("", "Siz bugun qatnashib bo'lgansiz ertaga urinib ko'ring!", "warning", 3000)
+                    return
+                } else {
+                    showLoader()
+                    showQuiz()
+                    await loadData()
+                }
             } else {
                 showLoader()
                 showQuiz()
